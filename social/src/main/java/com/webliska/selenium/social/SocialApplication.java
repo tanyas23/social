@@ -14,39 +14,24 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-public class SocialApplication {
+@EnableSwagger2
+public class SocialApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) throws MalformedURLException, InterruptedException {
-		//SpringApplication.run(SocialApplication.class, args);
-		URL local = new URL("http://localhost:9515");
-
-		WebDriver driver = new RemoteWebDriver(local, DesiredCapabilities.chrome());
-
-		// open the browser and go to open google.com
-
-		
-        driver.navigate().to("https://accounts.google.com/signup?hl=en-GB");
-        WebDriverWait wait = new WebDriverWait(driver, 4000);
-        wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("firstName")))).sendKeys("tanya");
-        wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("lastName")))).sendKeys("singhal");
-        wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("username")))).sendKeys("zqtanya");
-        Actions actions = new Actions(driver);
-        actions.moveToElement(driver.findElement(By.id("passwd")));
-        actions.click();
-        actions.sendKeys("sushma_68");
-        actions.build().perform();
-        actions.moveToElement(driver.findElement(By.id("confirm-passwd")));
-        actions.click();
-        actions.sendKeys("sushma_68");
-        actions.build().perform();
-        wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("accountDetailsNext")))).click();
-        Thread.sleep(1000);
-        wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("phoneNumberId")))).sendKeys("8806699967");
-        wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("gradsIdvPhoneNext")))).click();
-      
+		SpringApplication.run(SocialApplication.class, args);
+	}
+	
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(SocialApplication.class);
 	}
 
 }
